@@ -96,7 +96,7 @@ exports.update = (req, res, next) => {
     ).then(resultado => {
         res.status(201).json(
             {
-                mensagem: 'Venda do produto alterado'
+                mensagem: 'Venda do produto alterada'
             }
         );
     });
@@ -109,7 +109,7 @@ exports.getAll = (req, res, next) => {
         ]
     }).then(venda_produto => {
         res.status(200).json({
-            mensagem: 'Produto encontrados',
+            mensagem: 'Venda dos Produtos encontradas',
             venda_produto: venda_produto
         })
     })

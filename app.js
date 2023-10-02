@@ -15,8 +15,8 @@ const caixaRoutes = require('./routes/caixaRoutes');
 const festaRoutes = require('./routes/festaRoutes');
 const produtoRoutes = require('./routes/produtoRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
-// const venda_produtoRoutes = require('./routes/venda_produtoRoutes');
-// const vendaRoutes = require('./routes/vendaRoutes');
+const venda_produtoRoutes = require('./routes/venda_produtoRoutes');
+const vendaRoutes = require('./routes/vendaRoutes');
 
 const app = express();
 
@@ -54,7 +54,7 @@ app.use('/api/caixa', caixaRoutes);
 app.use('/api/festa', festaRoutes);
 app.use('/api/produto', produtoRoutes);
 app.use('/api/usuario', usuarioRoutes);
-// app.use('/api/venda_produto', venda_produtoRoutes);
-// app.use('/api/venda', vendaRoutes);
+app.use('/api/venda_produto', venda_produtoRoutes);
+app.use('/api/venda', vendaRoutes);
 
 module.exports = app;
