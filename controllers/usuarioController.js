@@ -6,10 +6,12 @@ const Utilidades = require('../utilidades/utilidades');
 
 exports.create = (req, res, next) => {
     const nome = req.body.nome;
-    const email = req.body.email;
+    const login = req.body.login;
     const senha = req.body.senha;
+    const administrador = req.body.administrador;
+    const festumId = req.body.festumId;
 
-    if(nome === undefined || email === undefined || senha === undefined)
+    if(nome === undefined || login === undefined || senha === undefined || administrador === undefined) 
     {
         res.status(400).json(
             {
@@ -22,7 +24,7 @@ exports.create = (req, res, next) => {
         bcrypt.hash(senha, 10).then(senhaCriptografada => {
             Usuario.findOne({
                 where: {
-                    email: email
+                    login: login
                 }
             }).then(usuario => {
                 console.log(usuario);
@@ -31,8 +33,10 @@ exports.create = (req, res, next) => {
                     Usuario.create(
                         {
                             nome: nome,
-                            email: email,
-                            senha: senhaCriptografada
+                            login: login,
+                            senha: senhaCriptografada,
+                            administrador: administrador,
+                            festumId: festumId
                         }
                     ).then(usuarioCriado => {
                         res.status(201).json(
@@ -41,7 +45,9 @@ exports.create = (req, res, next) => {
                                 usuario: {
                                     id: usuarioCriado.id,
                                     nome: usuarioCriado.nome,
-                                    email: usuarioCriado.email
+                                    login: usuarioCriado.login,
+                                    administrador: usuarioCriado.administrador,
+                                    festumId: usuarioCriado.festumId,
                                 }
                             }
                         );
@@ -71,7 +77,7 @@ exports.create = (req, res, next) => {
 exports.login = (req, res, next) => {
     const JWT_KEY = Utilidades.JWT_KEY;
 
-    const email = req.body.email;
+    const login = req.body.login;
     const senha = req.body.senha;
 
     let erro = false;
@@ -80,7 +86,7 @@ exports.login = (req, res, next) => {
     Usuario.findOne(
         {
             where: {
-                email: email
+                login: login
             }
         }
     ).then(usuario => {
@@ -112,7 +118,7 @@ exports.login = (req, res, next) => {
             }
             const token = jwt.sign(
                 {
-                    email: usuarioEncontrado.email
+                    login: usuarioEncontrado.login
                 },
                 JWT_KEY,
                 {
@@ -165,13 +171,17 @@ exports.trocarSenha = (req, res, next) => {
 
 exports.update = (req, res, next) => {
     const id = req.params.id;
-    const email = req.body.email;
+    const login = req.body.login;
     const nome = req.body.nome;
+    const administrador = req.body.administrador;
+    const festumId = req.body.festumId;
 
     Usuario.update(
         {
-            email: email,
-            nome: nome
+            login: login,
+            nome: nome,
+            administrador: administrador,
+            festumId: festumId
         },
         {
             where: {
@@ -192,7 +202,7 @@ exports.getAll = (req, res, next) => {
         order: [
             ['nome', 'ASC']
         ],
-        attributes: ['id', 'email', 'nome']
+        attributes: ['id', 'login', 'nome', 'administrador', 'festumId']
     }).then(usuarios => {
         res.status(200).json({
             mensagem: 'Usuários encontrados',
@@ -209,7 +219,7 @@ exports.getOne = (req, res, next) => {
             where: {
                 id: id
             },
-            attributes: ['id', 'email', 'nome']
+            attributes: ['id', 'login', 'nome', 'administrador', 'festumId']
         }
     ).then(usuario => {
         res.status(200).json({

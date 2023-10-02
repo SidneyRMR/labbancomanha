@@ -1,16 +1,16 @@
 const Sequelize = require('sequelize');
 const connection = require('../database/database');
 
-const Tipo = connection.define(
-    'tipo',
+const Festa = connection.define(
+    'festa',
     {
-        descricao: {
+        nome: {
             type: Sequelize.STRING,
             allowNull: false
         }
     }
 );
 
-// Tipo.sync({force: true});
+// Festa.sync({force: true});
 
-module.exports = Tipo;
+module.exports = Festa;

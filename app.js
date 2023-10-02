@@ -3,14 +3,20 @@ const express = require('express');
 const connection = require('./database/database');
 
 // Models
+const Caixa = require('./model/caixa');
+const Festa = require('./model/festa');
+const Produto = require('./model/produto');
 const Usuario = require('./model/usuario');
-const Tipo = require('./model/tipo');
-const Figurinha = require('./model/figurinha');
+const Venda_produto = require('./model/venda_produto');
+const Venda = require('./model/venda');
 
 // Routes import
+const caixaRoutes = require('./routes/caixaRoutes');
+const festaRoutes = require('./routes/festaRoutes');
+const produtoRoutes = require('./routes/produtoRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
-const tipoRoutes = require('./routes/tipoRoutes');
-const figurinhaRoutes = require('./routes/figurinhaRoutes');
+// const venda_produtoRoutes = require('./routes/venda_produtoRoutes');
+// const vendaRoutes = require('./routes/vendaRoutes');
 
 const app = express();
 
@@ -44,8 +50,11 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use('/api/caixa', caixaRoutes);
+app.use('/api/festa', festaRoutes);
+app.use('/api/produto', produtoRoutes);
 app.use('/api/usuario', usuarioRoutes);
-app.use('/api/tipo', tipoRoutes);
-app.use('/api/figurinha', figurinhaRoutes);
+// app.use('/api/venda_produto', venda_produtoRoutes);
+// app.use('/api/venda', vendaRoutes);
 
 module.exports = app;

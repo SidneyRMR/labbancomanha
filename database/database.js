@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 
 const connection = new Sequelize(
-    'figurinhas', // nome do banco
-    'admin', // usuário de conexão
-    'tirnanog', // senha do banco
+    'bd_programa_igreja', // nome do banco
+    'root', // usuário de conexão
+    '', // senha do banco
     {
         host: 'localhost', // url do servidor
         dialect: 'mysql', // tipo do banco

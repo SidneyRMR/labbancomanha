@@ -1,9 +1,12 @@
-const Tipo = require('../model/tipo');
+const Festa = require('../model/festa');
 
 exports.create = (req, res, next) => {
-    const descricao = req.body.descricao;
+    const nome = req.body.nome;
+    const ativa = req.body.ativa;
 
-    if(descricao === undefined)
+    console.log(nome, ativa);
+
+    if(nome === undefined || ativa === undefined)
     {
         res.status(400).json(
             {
@@ -13,29 +16,31 @@ exports.create = (req, res, next) => {
     }
     else
     {
-        Tipo.findOne({
+        Festa.findOne({
             where: {
-                descricao: descricao
+                nome: nome,
+                ativa: ativa
             }
-        }).then(tipoEncontrado => {
-            if(tipoEncontrado == undefined)
+        }).then(festa => {
+            if(festa == undefined)
             {
-                Tipo.create(
+                Festa.create(
                     {
-                        descricao: descricao
+                        nome: nome,
+                        ativa: ativa
                     }
-                ).then(tipoCriado => {
+                ).then(festaCriado => {
                     res.status(201).json(
                         {
-                            mensagem: 'Tipo criado',
-                            tipo: tipoCriado
+                            mensagem: 'Festa criado',
+                            festa: festaCriado
                         }
                     );
                 }).catch(err => {
                     console.log(err);
                     res.status(500).json(
                         {
-                            mensagem: 'Erro na criação do Tipo!',
+                            mensagem: 'Erro na criação da Festa!',
                             erro: err
                         }
                     );
@@ -45,7 +50,7 @@ exports.create = (req, res, next) => {
             {
                 res.status(401).json(
                     {
-                        mensagem: 'Tipo já existe'
+                        mensagem: 'Festa já existe'
                     }
                 );
             }
@@ -55,11 +60,13 @@ exports.create = (req, res, next) => {
 
 exports.update = (req, res, next) => {
     const id = req.params.id;
-    const descricao = req.body.descricao;
+    const nome = req.body.nome;
+    const ativa = req.body.ativa
 
-    Tipo.update(
+    Festa.update(
         {
-            descricao: descricao
+            nome: nome,
+            ativa: ativa
         },
         {
             where: {
@@ -69,21 +76,22 @@ exports.update = (req, res, next) => {
     ).then(resultado => {
         res.status(201).json(
             {
-                mensagem: 'Tipo alterado'
+                mensagem: 'Festa alterada'
             }
         );
     });
 }
 
 exports.getAll = (req, res, next) => {
-    Tipo.findAll({
+    Festa.findAll({
         order: [
-            ['descricao', 'ASC']
+            ['nome', 'ASC'],
+            ['ativa', 'ASC']
         ]
-    }).then(tipos => {
+    }).then(festa => {
         res.status(200).json({
-            mensagem: 'Tipos encontrados',
-            tipos: tipos
+            mensagem: 'Festa encontradas',
+            festa: festa
         })
     })
 }
@@ -91,23 +99,23 @@ exports.getAll = (req, res, next) => {
 exports.getOne = (req, res, next) => {
     const id = req.params.id;
 
-    Tipo.findOne(
+    Festa.findOne(
         {
             where: {
                 id: id
             }
         }
-    ).then(tipo => {
+    ).then(festa => {
         res.status(200).json({
-            mensagem: 'Tipo encontrado',
-            tipo: tipo
+            mensagem: 'Festa encontrado',
+            festa: festa
         });
     });
 }
 
 exports.delete = (req, res, next) => {
     const id = req.params.id;
-    Tipo.destroy(
+    Festa.destroy(
         {
             where: {
                 id: id
@@ -115,7 +123,7 @@ exports.delete = (req, res, next) => {
         }
     ).then(resultado => {
         res.status(200).json({
-            mensagem: 'Tipo excluído'
+            mensagem: 'Festa excluída'
         });
     });
 }
