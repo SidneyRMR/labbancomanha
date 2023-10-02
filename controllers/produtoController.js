@@ -39,6 +39,9 @@ exports.create = (req, res, next) => {
                         nome: nome,
                         preco: preco,
                         medida: medida,
+                        estoque: estoque,
+                        tipo: tipo,
+                        ativo: ativo,
                         festumId: festumId
                     }
                 ).then(produtoCriado => {
@@ -75,6 +78,9 @@ exports.update = (req, res, next) => {
     const nome = req.body.nome;
     const preco = req.body.preco;
     const medida = req.body.medida;
+    const estoque = req.body.estoque;
+    const tipo = req.body.tipo;
+    const ativo = req.body.ativo;
     const festumId = req.body.festumId;
 
     Produto.update(
@@ -82,6 +88,9 @@ exports.update = (req, res, next) => {
             nome: nome,
             preco: preco,
             medida: medida,
+            estoque: estoque,
+            tipo: tipo,
+            ativo: ativo,
             festumId: festumId
         },
         {
@@ -92,7 +101,7 @@ exports.update = (req, res, next) => {
     ).then(resultado => {
         res.status(201).json(
             {
-                mensagem: 'Produto alterada'
+                mensagem: 'Produto alterado'
             }
         );
     });
@@ -105,7 +114,7 @@ exports.getAll = (req, res, next) => {
         ]
     }).then(produto => {
         res.status(200).json({
-            mensagem: 'Produto encontradas',
+            mensagem: 'Produto encontrados',
             produto: produto
         })
     })
