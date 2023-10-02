@@ -19,7 +19,7 @@ const Venda_Produto = connection.define(
             type: Sequelize.DECIMAL(10,2),
             allowNull: false
         },
-        qtde_venda_ptoduts: {
+        qtde_venda_produtos: {
             type: Sequelize.INTEGER,
             allowNull: false
         }
