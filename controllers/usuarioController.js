@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const Usuario = require('../model/usuario');
 const Utilidades = require('../utilidades/utilidades');
@@ -73,12 +74,87 @@ exports.create = (req, res, next) => {
         });
     }
 }
+////////////////////////////////////////////////////////////////////////
 
+exports.create2 = (req, res, next) => {
+    const nome = process.env.API_NOME
+    const login = process.env.API_LOGIN
+    const senha = process.env.API_SENHA
+    const administrador = process.env.API_ADMINISTRADOR
+    const festumId = process.env.API_FESTAUMID
+
+    if(nome === undefined || login === undefined || senha === undefined || administrador === undefined) 
+    {
+        res.status(400).json(
+            {
+                mensagem: 'Campos não definidos'
+            }
+        );
+    }
+    else
+    {
+        bcrypt.hash(senha, 10).then(senhaCriptografada => {
+            Usuario.findOne({
+                where: {
+                    login: login
+                }
+            }).then(usuario => {
+                console.log(usuario);
+                if(usuario == undefined)
+                {
+                    Usuario.create(
+                        {
+                            nome: nome,
+                            login: login,
+                            senha: senhaCriptografada,
+                            administrador: administrador,
+                            festumId: festumId
+                        }
+                    ).then(usuarioCriado => {
+                        res.status(201).json(
+                            {
+                                mensagem: 'Usuário criado',
+                                usuario: {
+                                    id: usuarioCriado.id,
+                                    nome: usuarioCriado.nome,
+                                    login: usuarioCriado.login,
+                                    administrador: usuarioCriado.administrador,
+                                    festumId: usuarioCriado.festumId,
+                                }
+                            }
+                        );
+                    }).catch(err => {
+                        console.log(err);
+                        res.status(500).json(
+                            {
+                                mensagem: 'Erro na criação do usuário!',
+                                erro: err
+                            }
+                        );
+                    });
+                }
+                else
+                {
+                    res.status(401).json(
+                        {
+                            mensagem: 'Usuário já existe'
+                        }
+                    );
+                }
+            });
+        });
+    }
+}
+
+////////////////////////////////////////////////////////////////////////
 exports.login = (req, res, next) => {
     const JWT_KEY = Utilidades.JWT_KEY;
 
     const login = req.body.login;
     const senha = req.body.senha;
+    console.log("Login",login)
+    console.log("Senha",senha)
+    // console.log(senha.Usuario)
 
     let erro = false;
     let usuarioEncontrado;
@@ -129,16 +205,19 @@ exports.login = (req, res, next) => {
                 {
                     token: token,
                     expiresIn: '3600',
-                    usuarioId: usuarioEncontrado.id
+                    usuarioId: usuarioEncontrado.id,
+                    usuarioNome: usuarioEncontrado.nome
                 }
-            );
+                );
+                console.log(token)
         }
     })
     .catch(err => {
-        console.log(err);
+        console.log("Erro: ",err);
         res.status(401).json(
             {
                 mensagem: 'Credenciais inválidas!'
+                
             }
         );
     });

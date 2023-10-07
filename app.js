@@ -1,14 +1,14 @@
 const express = require('express');
-
+const cors = require("cors")
 const connection = require('./database/database');
 
 // Models
-const Caixa = require('./model/caixa');
-const Festa = require('./model/festa');
-const Produto = require('./model/produto');
-const Usuario = require('./model/usuario');
-const Venda_produto = require('./model/venda_produto');
-const Venda = require('./model/venda');
+// const Caixa = require('./model/caixa');
+// const Festa = require('./model/festa');
+// const Produto = require('./model/produto');
+// const Usuario = require('./model/usuario');
+// const Venda_produto = require('./model/venda_produto');
+// const Venda = require('./model/venda');
 
 // Routes import
 const caixaRoutes = require('./routes/caixaRoutes');
@@ -17,6 +17,7 @@ const produtoRoutes = require('./routes/produtoRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const venda_produtoRoutes = require('./routes/venda_produtoRoutes');
 const vendaRoutes = require('./routes/vendaRoutes');
+const Usuario = require('./model/usuario');
 
 const app = express();
 
@@ -24,6 +25,7 @@ const app = express();
 // Forms Parser
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(cors());
 
 // Database
 connection
@@ -56,5 +58,4 @@ app.use('/api/produto', produtoRoutes);
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/venda_produto', venda_produtoRoutes);
 app.use('/api/venda', vendaRoutes);
-
 module.exports = app;
