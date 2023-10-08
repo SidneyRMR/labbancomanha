@@ -85,8 +85,8 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     Festa.findAll({
         order: [
-            ['nome', 'ASC'],
-            ['ativa', 'ASC']
+            ['ativa', 'ASC'],
+            ['createdAt', 'ASC']
         ]
     }).then(festa => {
         res.status(200).json({

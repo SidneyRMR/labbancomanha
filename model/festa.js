@@ -7,6 +7,10 @@ const Festa = connection.define(
         nome: {
             type: Sequelize.STRING,
             allowNull: false
+        },
+        ativa: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false
         }
     }
 );

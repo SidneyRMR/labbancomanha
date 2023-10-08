@@ -21,6 +21,10 @@ const Usuario = connection.define(
         administrador: {
             type: Sequelize.BOOLEAN,
             allowNull: false
+        },
+        ativo: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false
         }
     }
 );

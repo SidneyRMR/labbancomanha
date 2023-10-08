@@ -9,7 +9,8 @@ exports.create = (req, res, next) => {
     const nome = req.body.nome;
     const login = req.body.login;
     const senha = req.body.senha;
-    const administrador = req.body.administrador;
+    const administrador = 0;
+    const ativo = 1;
     const festumId = req.body.festumId;
 
     if(nome === undefined || login === undefined || senha === undefined || administrador === undefined) 
@@ -28,7 +29,7 @@ exports.create = (req, res, next) => {
                     login: login
                 }
             }).then(usuario => {
-                console.log(usuario);
+                // console.log(usuario);
                 if(usuario == undefined)
                 {
                     Usuario.create(
@@ -37,6 +38,7 @@ exports.create = (req, res, next) => {
                             login: login,
                             senha: senhaCriptografada,
                             administrador: administrador,
+                            ativo: ativo,
                             festumId: festumId
                         }
                     ).then(usuarioCriado => {
@@ -48,6 +50,7 @@ exports.create = (req, res, next) => {
                                     nome: usuarioCriado.nome,
                                     login: usuarioCriado.login,
                                     administrador: usuarioCriado.administrador,
+                                    ativo: usuarioCriado.ativo,
                                     festumId: usuarioCriado.festumId,
                                 }
                             }
@@ -74,16 +77,17 @@ exports.create = (req, res, next) => {
         });
     }
 }
-////////////////////////////////////////////////////////////////////////
 
+// Rotina usada para criação do masterUser no BD
 exports.create2 = (req, res, next) => {
     const nome = process.env.API_NOME
     const login = process.env.API_LOGIN
     const senha = process.env.API_SENHA
     const administrador = process.env.API_ADMINISTRADOR
+    const ativo = process.env.API_ADMINISTRADOR
     const festumId = process.env.API_FESTAUMID
 
-    if(nome === undefined || login === undefined || senha === undefined || administrador === undefined) 
+    if(nome === undefined || login === undefined || senha === undefined|| ativo === undefined || administrador === undefined) 
     {
         res.status(400).json(
             {
@@ -108,6 +112,7 @@ exports.create2 = (req, res, next) => {
                             login: login,
                             senha: senhaCriptografada,
                             administrador: administrador,
+                            ativo: ativo,
                             festumId: festumId
                         }
                     ).then(usuarioCriado => {
@@ -119,6 +124,7 @@ exports.create2 = (req, res, next) => {
                                     nome: usuarioCriado.nome,
                                     login: usuarioCriado.login,
                                     administrador: usuarioCriado.administrador,
+                                    ativo: usuarioCriado.ativo,
                                     festumId: usuarioCriado.festumId,
                                 }
                             }
@@ -146,15 +152,13 @@ exports.create2 = (req, res, next) => {
     }
 }
 
-////////////////////////////////////////////////////////////////////////
 exports.login = (req, res, next) => {
     const JWT_KEY = Utilidades.JWT_KEY;
 
     const login = req.body.login;
     const senha = req.body.senha;
-    console.log("Login",login)
-    console.log("Senha",senha)
-    // console.log(senha.Usuario)
+    // console.log("Login",login)
+    // console.log("Senha",senha)
 
     let erro = false;
     let usuarioEncontrado;
@@ -252,14 +256,14 @@ exports.update = (req, res, next) => {
     const id = req.params.id;
     const login = req.body.login;
     const nome = req.body.nome;
-    const administrador = req.body.administrador;
+    // const administrador = req.body.administrador;
     const festumId = req.body.festumId;
 
     Usuario.update(
         {
             login: login,
             nome: nome,
-            administrador: administrador,
+            // administrador: administrador,
             festumId: festumId
         },
         {
@@ -279,9 +283,10 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     Usuario.findAll({
         order: [
-            ['nome', 'ASC']
+            ['nome', 'ASC'],
+            ['ativo', 'ASC'],
         ],
-        attributes: ['id', 'login', 'nome', 'administrador', 'festumId']
+        attributes: ['id', 'login', 'nome', 'ativo', 'administrador', 'festumId']
     }).then(usuarios => {
         res.status(200).json({
             mensagem: 'Usuários encontrados',
@@ -298,7 +303,7 @@ exports.getOne = (req, res, next) => {
             where: {
                 id: id
             },
-            attributes: ['id', 'login', 'nome', 'administrador', 'festumId']
+            attributes: ['id', 'login', 'nome', 'ativo', 'administrador', 'festumId']
         }
     ).then(usuario => {
         res.status(200).json({
