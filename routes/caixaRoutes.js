@@ -4,7 +4,7 @@ const checkAuth = require('../middleware/check-auth');
 
 const CaixaController = require('../controllers/caixaController');
 
-router.post('', CaixaController.create);
+router.post('', checkAuth, CaixaController.create);
 router.put('/:id', checkAuth, CaixaController.update);
 router.get('', checkAuth, CaixaController.getAll);
 router.get('/:id',checkAuth, CaixaController.getOne);

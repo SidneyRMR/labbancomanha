@@ -4,7 +4,7 @@ const checkAuth = require('../middleware/check-auth');
 
 const VendaController = require('../controllers/vendaController');
 
-router.post('', VendaController.create);
+router.post('', checkAuth, VendaController.create);
 router.put('/:id', checkAuth, VendaController.update);
 router.get('', checkAuth, VendaController.getAll);
 router.get('/:id',checkAuth, VendaController.getOne);

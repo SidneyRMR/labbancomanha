@@ -17,7 +17,6 @@ const produtoRoutes = require('./routes/produtoRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const venda_produtoRoutes = require('./routes/venda_produtoRoutes');
 const vendaRoutes = require('./routes/vendaRoutes');
-const Usuario = require('./model/usuario');
 
 const app = express();
 

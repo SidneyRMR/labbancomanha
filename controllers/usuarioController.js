@@ -287,10 +287,10 @@ exports.getAll = (req, res, next) => {
             ['ativo', 'ASC'],
         ],
         attributes: ['id', 'login', 'nome', 'ativo', 'administrador', 'festumId']
-    }).then(usuarios => {
+    }).then(usuario => {
         res.status(200).json({
             mensagem: 'Usuários encontrados',
-            usuarios: usuarios
+            usuario: usuario
         })
     })
 }

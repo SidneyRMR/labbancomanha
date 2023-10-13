@@ -105,7 +105,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     Venda.findAll({
         order: [
-            ['nome', 'ASC']
+            ['id', 'ASC']
         ]
     }).then(venda => {
         res.status(200).json({
