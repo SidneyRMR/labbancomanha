@@ -202,18 +202,19 @@ exports.login = (req, res, next) => {
                 },
                 JWT_KEY,
                 {
-                    expiresIn: '1h'
+                    expiresIn: '6h'
                 }
             );
             res.status(200).json(
                 {
                     token: token,
-                    expiresIn: '3600',
+                    expiresIn: '21600',
                     usuarioId: usuarioEncontrado.id,
-                    usuarioNome: usuarioEncontrado.nome
+                    usuarioNome: usuarioEncontrado.nome,
+                    isAdmin: usuarioEncontrado.administrador
                 }
                 );
-                console.log(token)
+                // console.log('tempo restante',expiresIn)
         }
     })
     .catch(err => {
@@ -256,14 +257,16 @@ exports.update = (req, res, next) => {
     const id = req.params.id;
     const login = req.body.login;
     const nome = req.body.nome;
-    // const administrador = req.body.administrador;
-    const festumId = req.body.festumId;
+    const administrador = req.params.administrador;
+    const ativo = req.body.ativo;
+    const festumId = req.params.festumId;
 
     Usuario.update(
         {
             login: login,
             nome: nome,
-            // administrador: administrador,
+            administrador: administrador,
+            ativo: ativo,
             festumId: festumId
         },
         {

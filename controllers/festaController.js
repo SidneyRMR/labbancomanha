@@ -32,7 +32,7 @@ exports.create = (req, res, next) => {
                 ).then(festaCriado => {
                     res.status(201).json(
                         {
-                            mensagem: 'Festa criado',
+                            mensagem: 'Festa criada',
                             festa: festaCriado
                         }
                     );
@@ -85,7 +85,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     Festa.findAll({
         order: [
-            ['ativa', 'ASC'],
+            ['ativa', 'DESC'],
             ['createdAt', 'ASC']
         ]
     }).then(festa => {
@@ -107,7 +107,7 @@ exports.getOne = (req, res, next) => {
         }
     ).then(festa => {
         res.status(200).json({
-            mensagem: 'Festa encontrado',
+            mensagem: 'Festa encontrada',
             festa: festa
         });
     });

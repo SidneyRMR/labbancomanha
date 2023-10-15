@@ -6,10 +6,10 @@ exports.create = (req, res, next) => {
     const medida = req.body.medida;
     const estoque = req.body.estoque;
     const tipo = req.body.tipo;
-    const ativo = req.body.ativo;
+    const ativo = 1;
     const festumId = req.body.festumId;
 
-    console.log(nome, preco);
+    console.log(nome, preco,medida,estoque,tipo,ativo,festumId);
 
     if(nome === undefined || preco === undefined || medida === undefined || festumId === undefined || estoque === undefined || tipo === undefined || ativo === undefined)
     {
@@ -81,8 +81,10 @@ exports.update = (req, res, next) => {
     const estoque = req.body.estoque;
     const tipo = req.body.tipo;
     const ativo = req.body.ativo;
-    const festumId = req.body.festumId;
+    const festumId = req.params.festumId;
 
+    console.log(nome, preco,medida,estoque,tipo,ativo,festumId);
+    
     Produto.update(
         {
             nome: nome,
