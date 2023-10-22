@@ -15,13 +15,21 @@ const Caixa = connection.define(
         aberto: {
             type: Sequelize.BOOLEAN,
             allowNull: false
+        },
+        festaId: {
+            type: Sequelize.INTEGER, 
+            allowNull: false
+        },
+        usuarioId: {
+            type: Sequelize.INTEGER, 
+            allowNull: false
         }
     }
 );
 // // FK USUARIO 
-Caixa.belongsTo(Usuario);
+Caixa.belongsTo(Usuario, { foreignKey: 'usuarioId' });
 // FK FESTA 
-Caixa.belongsTo(Festa);
+Caixa.belongsTo(Festa, { foreignKey: 'festaId' });
 
 // Caixa.sync({force: true});
 

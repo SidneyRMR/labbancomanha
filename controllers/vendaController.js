@@ -8,7 +8,7 @@ exports.create = (req, res, next) => {
     const caixaId = req.body.caixaId;
     const usuarioId = req.body.usuarioId;
 
-    console.log(debito, credito);
+    // console.log(debito, credito);
 
     if(debito === undefined || credito === undefined || pix === undefined || dinheiro === undefined || caixaId === undefined || usuarioId === undefined)
     {

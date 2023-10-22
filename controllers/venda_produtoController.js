@@ -8,7 +8,7 @@ exports.create = (req, res, next) => {
     const produtoId = req.body.produtoId;
     const vendaId = req.body.vendaId;
 
-    console.log(nome, medida);
+    // console.log(nome, medida);
 
     if(nome === undefined || medida === undefined || preco === undefined || qtde_venda_produtos === undefined || produtoId === undefined || vendaId === undefined)
     {

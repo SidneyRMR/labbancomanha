@@ -25,11 +25,15 @@ const Usuario = connection.define(
         ativo: {
             type: Sequelize.BOOLEAN,
             allowNull: false
+        },
+        festaId: {
+            type: Sequelize.INTEGER, 
+            allowNull: false
         }
     }
 );
 // FK FESTA
-Usuario.belongsTo(Festa);
+Usuario.belongsTo(Festa, { foreignKey: 'festaId' } );
 
 // Usuario.sync({force: true});
 

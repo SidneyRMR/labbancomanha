@@ -29,11 +29,15 @@ const Produto = connection.define(
         ativo: {
             type: Sequelize.BOOLEAN, 
             allowNull: false
+        },
+        festaId: {
+            type: Sequelize.INTEGER, 
+            allowNull: false
         }
     }
 );
 //FK FESTA
-Produto.belongsTo(Festa);
+Produto.belongsTo(Festa, { foreignKey: 'festaId' });
 
 // Produto.sync({force: true});
 

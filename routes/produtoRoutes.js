@@ -7,6 +7,7 @@ const ProdutoController = require('../controllers/produtoController');
 router.post('', checkAuth, ProdutoController.create);
 router.put('/:id', checkAuth, ProdutoController.update);
 router.get('', checkAuth, ProdutoController.getAll);
+router.get('/:festaId', checkAuth, ProdutoController.getAllByFesta);
 router.get('/:id',checkAuth, ProdutoController.getOne);
 router.delete('/:id',checkAuth, ProdutoController.delete);
 

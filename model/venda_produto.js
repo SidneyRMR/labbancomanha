@@ -22,13 +22,21 @@ const Venda_Produto = connection.define(
         qtde_venda_produtos: {
             type: Sequelize.INTEGER,
             allowNull: false
+        },
+        produtoId: {
+            type: Sequelize.INTEGER, 
+            allowNull: false
+        },
+        vendaId: {
+            type: Sequelize.INTEGER, 
+            allowNull: false
         }
     }
 );
 // FK PRODUTO
-Venda_Produto.belongsTo(Produto);
+Venda_Produto.belongsTo(Produto, { foreignKey: 'produtoId' });
 // FK VENDA
-Venda_Produto.belongsTo(Venda);
+Venda_Produto.belongsTo(Venda, { foreignKey: 'vendaId' });
 
 // Venda_Produto.sync({force: true});
 

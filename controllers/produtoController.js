@@ -1,4 +1,5 @@
 const Produto = require('../model/produto');
+const Festa = require('../model/festa');
 
 exports.create = (req, res, next) => {
     const nome = req.body.nome;
@@ -7,11 +8,11 @@ exports.create = (req, res, next) => {
     const estoque = req.body.estoque;
     const tipo = req.body.tipo;
     const ativo = 1;
-    const festumId = req.body.festumId;
+    const festaId = req.body.festaId;
 
-    console.log(nome, preco,medida,estoque,tipo,ativo,festumId);
+    // console.log(nome, preco,medida,estoque,tipo,ativo,festaId);
 
-    if(nome === undefined || preco === undefined || medida === undefined || festumId === undefined || estoque === undefined || tipo === undefined || ativo === undefined)
+    if(nome === undefined || preco === undefined || medida === undefined || festaId === undefined || estoque === undefined || tipo === undefined || ativo === undefined)
     {
         res.status(400).json(
             {
@@ -29,7 +30,7 @@ exports.create = (req, res, next) => {
                 estoque: estoque,
                 tipo: tipo,
                 ativo: ativo,
-                festumId: festumId
+                festaId: festaId
             }
         }).then(produto => {
             if(produto == undefined)
@@ -42,7 +43,7 @@ exports.create = (req, res, next) => {
                         estoque: estoque,
                         tipo: tipo,
                         ativo: ativo,
-                        festumId: festumId
+                        festaId: festaId
                     }
                 ).then(produtoCriado => {
                     res.status(201).json(
@@ -81,9 +82,9 @@ exports.update = (req, res, next) => {
     const estoque = req.body.estoque;
     const tipo = req.body.tipo;
     const ativo = req.body.ativo;
-    const festumId = req.params.festumId;
+    const festaId = req.params.festaId;
 
-    console.log(nome, preco,medida,estoque,tipo,ativo,festumId);
+    // console.log(nome, preco,medida,estoque,tipo,ativo,festaId);
     
     Produto.update(
         {
@@ -93,7 +94,7 @@ exports.update = (req, res, next) => {
             estoque: estoque,
             tipo: tipo,
             ativo: ativo,
-            festumId: festumId
+            festaId: festaId
         },
         {
             where: {
@@ -112,15 +113,63 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     Produto.findAll({
         order: [
-            ['nome', 'ASC']
+            ['nome', 'ASC'],
+            ["ativo", "ASC"]
         ]
     }).then(produto => {
+        if (!produto) {
+            return res.status(404).json({
+              mensagem: "Nenhum produto encontrado..",
+              usuarios: [],
+            });
+          }
         res.status(200).json({
             mensagem: 'Produto encontrados',
             produto: produto
         })
     })
 }
+
+exports.getAllByFesta = (req, res, next) => {
+    const festaId = +req.params.festaId; // Obtenha o ID da festa a partir dos parâmetros da URL
+    // console.log(festaId);
+    Produto.findAll({
+      where: {
+          festaId: festaId, // Filtra por festaId igual ao ID da festa
+      },
+      include: {
+        model: Festa,
+        attributes: ["nome"], // Especifique as colunas da tabela Festa que você deseja incluir
+      },
+      order: [
+        ["nome", "ASC"],
+        ["ativo", "ASC"],
+      ],
+      attributes: ["id", "nome", "preco", "medida", "estoque", "tipo" ,"ativo", "festaId"],
+    }).then((produtos) => {
+        if (!produtos) {
+          return res.status(404).json({
+            mensagem: 'Nenhum produto encontrado para esta festa.',
+            produtos: [],
+          });
+        }
+        const produtosComNomesDeFesta = produtos.map((produto) => ({
+            id: produto.id,
+            nome: produto.nome,
+            preco: produto.preco,
+            medida: produto.medida,
+            estoque: produto.estoque,
+            tipo: produto.tipo,
+            ativo: produto.ativo,
+            festaNome: produto.festum.nome, // Obtenha o nome da festa a partir do join
+          }));
+          console.log(produtosComNomesDeFesta);
+      res.status(200).json({
+        mensagem: "Produtos encontrados",
+        produtos: produtosComNomesDeFesta,
+      });
+    });
+  };
 
 exports.getOne = (req, res, next) => {
     const id = req.params.id;

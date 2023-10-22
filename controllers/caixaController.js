@@ -4,11 +4,11 @@ exports.create = (req, res, next) => {
     const saldo_dinheiro = req.body.saldo_dinheiro;
     const aberto = req.body.aberto;
     const usuarioId = req.body.usuarioId;
-    const festumId = req.body.festumId;
+    const festaId = req.body.festaId;
 
     console.log(saldo_dinheiro, aberto);
 
-    if(saldo_dinheiro === undefined || aberto === undefined || usuarioId === undefined || festumId === undefined)
+    if(saldo_dinheiro === undefined || aberto === undefined || usuarioId === undefined || festaId === undefined)
     {
         res.status(400).json(
             {
@@ -23,7 +23,7 @@ exports.create = (req, res, next) => {
                 saldo_dinheiro: saldo_dinheiro,
                 aberto: aberto,
                 usuarioId: usuarioId,
-                festumId: festumId
+                festaId: festaId
             }
         }).then(caixa => {
             if(caixa == undefined)
@@ -33,7 +33,7 @@ exports.create = (req, res, next) => {
                         saldo_dinheiro: saldo_dinheiro,
                         aberto: aberto,
                         usuarioId: usuarioId,
-                        festumId: festumId
+                        festaId: festaId
                     }
                 ).then(caixaCriado => {
                     res.status(201).json(
@@ -69,14 +69,14 @@ exports.update = (req, res, next) => {
     const saldo_dinheiro = req.body.saldo_dinheiro;
     const aberto = req.body.aberto;
     const usuarioId = req.body.usuarioId;
-    const festumId = req.body.festumId;
+    const festaId = req.body.festaId;
 
     Caixa.update(
         {
             saldo_dinheiro: saldo_dinheiro,
             aberto: aberto,
             usuarioId: usuarioId,
-            festumId: festumId
+            festaId: festaId
         },
         {
             where: {

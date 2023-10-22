@@ -4,7 +4,7 @@ exports.create = (req, res, next) => {
     const nome = req.body.nome;
     const ativa = req.body.ativa;
 
-    console.log(nome, ativa);
+    // console.log(nome, ativa);
 
     if(nome === undefined || ativa === undefined)
     {
