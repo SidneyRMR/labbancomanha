@@ -29,6 +29,7 @@ exports.create = (req, res, next) => {
       Usuario.findOne({
         where: {
           login: login,
+          // festaId: festaId,
         },
       }).then((usuario) => {
         // console.log(usuario);
@@ -186,6 +187,7 @@ exports.login = (req, res, next) => {
           expiresIn: "21600",
           usuarioId: usuarioEncontrado.id,
           usuarioNome: usuarioEncontrado.nome,
+          usuarioFesta: usuarioEncontrado.festaId,
           isAdmin: usuarioEncontrado.administrador,
         });
         // console.log('tempo restante',expiresIn)
@@ -301,7 +303,7 @@ exports.getAllByFesta = (req, res, next) => {
           administrador: usuario.administrador,
           festaNome: usuario.festum.nome, // Obtenha o nome da festa a partir do join
         }));
-        console.log(usuariosComNomesDeFesta);
+        // console.log(usuariosComNomesDeFesta);
     res.status(200).json({
       mensagem: "Usuários encontrados",
       usuarios: usuariosComNomesDeFesta,

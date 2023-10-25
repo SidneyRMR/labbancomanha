@@ -163,7 +163,7 @@ exports.getAllByFesta = (req, res, next) => {
             ativo: produto.ativo,
             festaNome: produto.festum.nome, // Obtenha o nome da festa a partir do join
           }));
-          console.log(produtosComNomesDeFesta);
+        //   console.log(produtosComNomesDeFesta);
       res.status(200).json({
         mensagem: "Produtos encontrados",
         produtos: produtosComNomesDeFesta,
