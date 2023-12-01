@@ -78,7 +78,7 @@ exports.create2 = (req, res, next) => {
   const login = process.env.API_LOGIN;
   const senha = process.env.API_SENHA;
   const administrador = process.env.API_ADMINISTRADOR;
-  const ativo = process.env.API_ADMINISTRADOR;
+  const ativo = process.env.API_ATIVO;
   const festaId = process.env.API_FESTAID;
 
   if (
@@ -301,7 +301,7 @@ exports.getAllByFesta = (req, res, next) => {
           nome: usuario.nome,
           ativo: usuario.ativo,
           administrador: usuario.administrador,
-          festaNome: usuario.festum.nome, // Obtenha o nome da festa a partir do join
+          // festaNome: usuario.festum.nome, // Obtenha o nome da festa a partir do join
         }));
         // console.log(usuariosComNomesDeFesta);
     res.status(200).json({

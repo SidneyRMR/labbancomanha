@@ -3,10 +3,15 @@ const connection = require('../database/database');
 
 const Caixa = require('./caixa');
 const Usuario = require('./usuario');
+const Festa = require('./festa');
 
 const Venda = connection.define(
     'venda',
     {
+        dinheiro: {
+            type: Sequelize.DECIMAL(10,2),
+            allowNull: false
+        },
         debito: {
             type: Sequelize.DECIMAL(10,2),
             allowNull: false
@@ -19,15 +24,15 @@ const Venda = connection.define(
             type: Sequelize.DECIMAL(10,2),
             allowNull: false
         },
-        dinheiro: {
-            type: Sequelize.DECIMAL(10,2),
+        caixaId: {
+            type: Sequelize.INTEGER, 
             allowNull: false
         },
         usuarioId: {
             type: Sequelize.INTEGER, 
             allowNull: false
         },
-        caixaId: {
+        festaId: {
             type: Sequelize.INTEGER, 
             allowNull: false
         }
@@ -37,6 +42,8 @@ const Venda = connection.define(
 Venda.belongsTo(Caixa, { foreignKey: 'caixaId' });
 // FK USUARIO
 Venda.belongsTo(Usuario, { foreignKey: 'usuarioId' });
+// FK USUARIO
+Venda.belongsTo(Festa, { foreignKey: 'festaId' });
 
 // Venda.sync({force: true});
 

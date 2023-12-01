@@ -8,11 +8,23 @@ var app = require('../app');
 var debug = require('debug')('api-igreja:server');
 var http = require('http');
 
+
+/**
+ * Check if it's a mobile device and adjust the port accordingly.
+ */
+
+var isMobile = false; // Assuming it's not a mobile device by default
+var userAgent = ''; // User-Agent header from the request
+if (typeof req !== 'undefined') {
+  // Assuming 'req' is available here; adjust if needed
+  userAgent = req.headers['user-agent'];
+  isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+}
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8800');
+var port = isMobile ? normalizePort(process.env.MOBILE_PORT || '8800') : normalizePort(process.env.API_PORT || '8800');
 app.set('port', port);
 
 /**

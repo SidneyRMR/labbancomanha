@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require("cors")
 const connection = require('./database/database');
+const checkAuth = require('./middleware/check-auth');
+const getLocalIpAddress = require('./database/getIpAddress');
 
 // Models
 // const Caixa = require('./model/caixa');
@@ -9,6 +11,8 @@ const connection = require('./database/database');
 // const Usuario = require('./model/usuario');
 // const Venda_produto = require('./model/venda_produto');
 // const Venda = require('./model/venda');
+
+// 
 
 // Routes import
 const caixaRoutes = require('./routes/caixaRoutes');
@@ -57,4 +61,11 @@ app.use('/api/produto', produtoRoutes);
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/venda_produto', venda_produtoRoutes);
 app.use('/api/venda', vendaRoutes);
+
+// Use a rota getIpAddress
+app.get('/api/getIpAddress', (req, res) => {
+  const ipAddress = getLocalIpAddress();
+  console.log(ipAddress)
+  res.json({ ipAddress });
+});
 module.exports = app;

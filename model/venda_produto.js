@@ -3,6 +3,7 @@ const connection = require('../database/database');
 
 const Produto = require('./produto');
 const Venda = require('./venda');
+const Usuario = require('./usuario');
 
 const Venda_Produto = connection.define(
     'venda_produto',
@@ -20,7 +21,7 @@ const Venda_Produto = connection.define(
             allowNull: false
         },
         qtde_venda_produtos: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.DECIMAL(10,3),
             allowNull: false
         },
         produtoId: {
@@ -30,9 +31,15 @@ const Venda_Produto = connection.define(
         vendaId: {
             type: Sequelize.INTEGER, 
             allowNull: false
+        },
+        usuarioId: {
+            type: Sequelize.INTEGER, 
+            allowNull: false
         }
     }
 );
+// FK PRODUTO
+Venda_Produto.belongsTo(Usuario, { foreignKey: 'usuarioId' });
 // FK PRODUTO
 Venda_Produto.belongsTo(Produto, { foreignKey: 'produtoId' });
 // FK VENDA

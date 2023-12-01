@@ -161,7 +161,7 @@ exports.getAllByFesta = (req, res, next) => {
             estoque: produto.estoque,
             tipo: produto.tipo,
             ativo: produto.ativo,
-            festaNome: produto.festum.nome, // Obtenha o nome da festa a partir do join
+            // festaNome: produto.festum.nome, // Obtenha o nome da festa a partir do join
           }));
         //   console.log(produtosComNomesDeFesta);
       res.status(200).json({

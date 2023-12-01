@@ -5,7 +5,7 @@ const Festa = require('./festa');
 
 const Produto = connection.define(
     'produto',
-    {
+    { 
         nome: {
             type: Sequelize.STRING,
             allowNull: false

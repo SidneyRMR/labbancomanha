@@ -29,7 +29,7 @@ const Usuario = connection.define(
         festaId: {
             type: Sequelize.INTEGER, 
             allowNull: false
-        }
+        },
     }
 );
 // FK FESTA

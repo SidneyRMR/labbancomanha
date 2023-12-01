@@ -19,7 +19,62 @@ exports.create = (req, res, next) => {
         Festa.findOne({
             where: {
                 nome: nome,
-                ativa: ativa
+            }
+        }).then(festa => {
+            if(festa == undefined)
+            {
+                Festa.create(
+                    {
+                        nome: nome,
+                        ativa: ativa
+                    }
+                ).then(festaCriado => {
+                    res.status(201).json(
+                        {
+                            mensagem: 'Festa criada',
+                            festa: festaCriado
+                        }
+                    );
+                }).catch(err => {
+                    console.log(err);
+                    res.status(500).json(
+                        {
+                            mensagem: 'Erro na criação da Festa!',
+                            erro: err
+                        }
+                    );
+                });
+            }
+            else
+            {
+                res.status(401).json(
+                    {
+                        mensagem: 'Festa já existe'
+                    }
+                );
+            }
+        });
+    }
+}
+exports.createBase = (req, res, next) => {
+    const nome = process.env.API_NOME_FESTA;
+    const ativa = process.env.API_ATIVA_FESTA;
+
+    // console.log(nome, ativa);
+
+    if(nome === undefined || ativa === undefined)
+    {
+        res.status(400).json(
+            {
+                mensagem: 'Campos não definidos'
+            }
+        );
+    }
+    else
+    {
+        Festa.findOne({
+            where: {
+                nome: nome,
             }
         }).then(festa => {
             if(festa == undefined)
